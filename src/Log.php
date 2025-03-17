@@ -53,7 +53,7 @@ class Log
             : 'ALL';
         $dir = $_SERVER['DOCUMENT_ROOT'] ?? __DIR__;
         $default_config = [
-            'logs' =>  $dir . '/logs'
+            'logs' => $dir . '/logs'
         ];
         $configs = $config ? $config->getAll() : $default_config;
         $configs = array_merge($default_config, $configs);
