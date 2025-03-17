@@ -18,9 +18,9 @@ class Log
      *
      * @var null|string
      */
-    private $_error = null;
+    private $error = null;
 
-    private $_levels = [
+    private $levels = [
         'FATAL' => 1,
         'ERROR' => 2,
         'WARNING' => 3,
@@ -34,21 +34,21 @@ class Log
      *
      * @var string
      */
-    private $_dir;
+    private $dir;
 
-    private $_level;
+    private $level;
 
     private static $_instance;
 
     /**
-     * Undocumented function
+     * Constructor
      *
      * @param string       $level  Levels
      * @param ConfigLoader $config Configuration
      */
     private function __construct($level = 'ALL', ?ConfigLoader $config = null)
     {
-        $this->_level = in_array($level, array_keys($this->_levels))
+        $this->level = in_array($level, array_keys($this->levels))
             ? $level
             : 'ALL';
         $dir = $_SERVER['DOCUMENT_ROOT'] ?? __DIR__;
@@ -58,8 +58,8 @@ class Log
         $configs = $config ? $config->getAll() : $default_config;
         $configs = is_array($configs) ? array_merge($default_config, $configs) : $default_config;
 
-        $this->_dir = $configs['logs'];
-        !is_dir($this->_dir) and @mkdir($this->_dir, 0777);
+        $this->dir = $configs['logs'];
+        ! is_dir($this->dir) && @mkdir($this->dir, 0777);
         $this->_initialize();
     }
 
@@ -70,7 +70,7 @@ class Log
      */
     private function _initialize()
     {
-        $dir = opendir($this->_dir);
+        $dir = opendir($this->dir);
         while (($log = readdir($dir)) !== false) {
             if ($log == '.'
                 || $log == '..'
@@ -78,17 +78,17 @@ class Log
             ) {
                 continue;
             }
-            filectime($this->_dir . '/' . $log) <= time() - 14 * 24 * 60 * 60
-                and unlink($this->_dir . '/' . $log);
+            filectime($this->dir . '/' . $log) <= time() - 14 * 24 * 60 * 60
+                && unlink($this->dir . '/' . $log);
         }
         closedir($dir);
         $prefix = Date('Y-m-d');
-        $this->_error = $this->_error ?? $prefix . '-error.log';
+        $this->error = $this->error ?? $prefix . '-error.log';
         $this->_activity = $this->_activity ?? $prefix . '-activity.log';
-        !file_exists($this->_dir . '/' . $this->_error)
-            and fclose(fopen($this->_dir . '/' . $this->_error, 'w'));
-        !file_exists($this->_dir . '/' . $this->_activity)
-            and fclose(fopen($this->_dir . '/' . $this->_activity, 'w'));
+        !file_exists($this->dir . '/' . $this->error)
+            && fclose(fopen($this->dir . '/' . $this->error, 'w'));
+        !file_exists($this->dir . '/' . $this->_activity)
+            && fclose(fopen($this->dir . '/' . $this->_activity, 'w'));
     }
 
     /**
@@ -125,10 +125,10 @@ class Log
      */
     public function error($msg, $data = null): bool
     {
-        if ($this->_levels[$this->_level] >= $this->_levels['ERROR']) {
+        if ($this->levels[$this->level] >= $this->levels['ERROR']) {
             $msg = $this->format($msg, 'ERROR', date('m/d/Y h:i:s'));
 
-            return $this->_add($this->_dir . '/' . $this->_error, $msg, $data);
+            return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
 
         return true;
@@ -144,10 +144,10 @@ class Log
      */
     public function info($msg, $data = null): bool
     {
-        if ($this->_levels[$this->_level] >= $this->_levels['INFO']) {
+        if ($this->levels[$this->level] >= $this->levels['INFO']) {
             $msg = $this->format($msg, 'INFO', date('m/d/Y h:i:s'));
 
-            return $this->_add($this->_dir . '/' . $this->_error, $msg, $data);
+            return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
 
         return true;
@@ -163,10 +163,10 @@ class Log
      */
     public function warning($msg, $data = null): bool
     {
-        if ($this->_levels[$this->_level] >= $this->_levels['WARNING']) {
+        if ($this->levels[$this->level] >= $this->levels['WARNING']) {
             $msg = $this->format($msg, 'WARNING', date('m/d/Y h:i:s'));
 
-            return $this->_add($this->_dir . '/' . $this->_error, $msg, $data);
+            return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
 
         return true;
@@ -182,10 +182,10 @@ class Log
      */
     public function fatal($msg, $data = null): bool
     {
-        if ($this->_levels[$this->_level] >= $this->_levels['FATAL']) {
+        if ($this->levels[$this->level] >= $this->levels['FATAL']) {
             $msg = $this->format($msg, 'FATAL', date('m/d/Y h:i:s'));
 
-            return $this->_add($this->_dir . '/' . $this->_error, $msg, $data);
+            return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
 
         return true;
@@ -201,10 +201,10 @@ class Log
      */
     public function debug($msg, $data = null): bool
     {
-        if ($this->_levels[$this->_level] >= $this->_levels['DEBUG']) {
+        if ($this->levels[$this->level] >= $this->levels['DEBUG']) {
             $msg = $this->format($msg, 'DEBUG', date('m/d/Y h:i:s'));
 
-            return $this->_add($this->_dir . '/' . $this->_error, $msg, $data);
+            return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
 
         return true;
@@ -222,7 +222,7 @@ class Log
     {
         $msg = $this->format($msg, 'INFO', date('m/d/Y h:i:s'));
 
-        return $this->_add($this->_dir . '/' . $this->_activity, $msg, $data);
+        return $this->_add($this->dir . '/' . $this->_activity, $msg, $data);
     }
 
     /**
@@ -238,7 +238,7 @@ class Log
     {
         $msg .= '[' . date('m/d/Y h:i:s') . ']';
 
-        return $this->_add($this->_dir . '/' . $file, $msg, $data);
+        return $this->_add($this->dir . '/' . $file, $msg, $data);
     }
 
     /**
@@ -269,9 +269,9 @@ class Log
     private function _add(string $file, string $msg, ?array $data = null)
     {
         !file_exists($file)
-            and fclose(fopen($file, 'w'));
+            && fclose(fopen($file, 'w'));
         if (file_exists($file)) {
-            ($data != null) and ($msg .= ', Data : ' . print_r($data, true));
+            ($data != null) && ($msg .= ', Data : ' . print_r($data, true));
             $msg .= "\n";
             file_put_contents($file, $msg, FILE_APPEND);
 
