@@ -1,4 +1,4 @@
-name: Update PHP Package
+name: Update Logger Package
 
 on:
   workflow_dispatch:  # Allows manual triggering of the workflow
