@@ -49,7 +49,7 @@ class LogHandlerTest extends TestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Method invalidMethod does not exist');
-        $logger = LogHandler::getInstance(Log::class);
+        $logger = LogHandler::getInstance(Log::class, $this->config);
         LogHandler::invalidMethod();
     }
 }
