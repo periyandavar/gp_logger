@@ -34,7 +34,7 @@ jobs:
       - name: Commit and push changes
         run: |
           git add composer.json composer.lock
-          git commit -m "Update vendor/package-name to latest version" || echo "No changes to commit"
-          git push origin HEAD:${{ github.event.inputs.target_branch }}  # Push to the specified target branch
+          git commit -m "feat: update gp/loader to latest version" || echo "No changes to commit"
+          git push origin ${{ github.event.inputs.target_branch }}
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
