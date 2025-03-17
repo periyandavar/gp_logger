@@ -58,7 +58,7 @@ class Log
         $configs = $config ? $config->getAll() : $default_config;
         $configs = array_merge($default_config, $configs);
 
-        $this->_dir = $config['logs'];
+        $this->_dir = $configs['logs'];
         !is_dir($this->_dir) and mkdir($this->_dir, 0777);
         $this->_initialize();
     }
@@ -255,6 +255,8 @@ class Log
      */
     private function _add(string $file, string $msg, ?array $data = null)
     {
+        !file_exists($file)
+            and fclose(fopen($file, 'w'));
         if (file_exists($file)) {
             ($data != null) and ($msg .= ", Data : " . print_r($data, true));
             $msg .= "\n";

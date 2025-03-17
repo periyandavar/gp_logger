@@ -19,13 +19,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Loader\\": "src//"
+            "Logger\\": "src//"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Loader\\": "src//"
+            "Logger\\": "src//"
         }
     }
 }

@@ -28,7 +28,7 @@ class LogHandler
         if (self::$logger === null) {
             throw new \Exception("Logger not found");
         }
-        if (self::$logger->$name === null) {
+        if (!method_exists(self::$logger, $name)) {
             throw new \Exception("Method $name does not exist");
         }
 
