@@ -14,7 +14,7 @@ class LogHandler
             case Log::class:
                 self::$logger = Log::getInstance($level, $config);
                 break;
-            
+
             default:
                 throw new \Exception('Driver not found : ' . $driver);
         }
@@ -22,11 +22,10 @@ class LogHandler
         return self::$logger;
     }
 
-    
     public static function __callStatic($name, $arguments)
     {
         if (self::$logger === null) {
-            throw new \Exception("Logger not found");
+            throw new \Exception('Logger not found');
         }
         if (!method_exists(self::$logger, $name)) {
             throw new \Exception("Method $name does not exist");

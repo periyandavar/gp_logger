@@ -1,9 +1,7 @@
 <?php
 
-
-use PHPUnit\Framework\TestCase;
 use Logger\Log;
-use Loader\Config\ConfigLoader;
+use PHPUnit\Framework\TestCase;
 
 class LogTest extends TestCase
 {
