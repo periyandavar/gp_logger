@@ -56,7 +56,7 @@ class Log
             'logs' => $dir . '/logs'
         ];
         $configs = $config ? $config->getAll() : $default_config;
-        $configs = array_merge($default_config, $configs);
+        $configs = is_array($configs) ? array_merge($default_config, $configs) : $default_config;
 
         $this->_dir = $configs['logs'];
         !is_dir($this->_dir) and mkdir($this->_dir, 0777);
