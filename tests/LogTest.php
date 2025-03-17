@@ -13,6 +13,18 @@ class LogTest extends TestCase
         $this->config = ConfigLoader::getInstance(ConfigLoader::ARRAY_LOADER);
         $this->config->set('logs', __DIR__ . '/fixture');
     }
+
+    public function tearDown(): void
+    {
+        $pattern = __DIR__ . '/fixture/*.log';
+        $files = glob($pattern);
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
     public function testGetInstance()
     {
         $log = Log::getInstance('ALL', $this->config);

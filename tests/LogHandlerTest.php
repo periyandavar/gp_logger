@@ -14,9 +14,21 @@ class LogHandlerTest extends TestCase
         $this->config = ConfigLoader::getInstance(ConfigLoader::ARRAY_LOADER);
         $this->config->set('logs', __DIR__ . '/fixture');
     }
+
+    public function tearDown(): void
+    {
+        $pattern = __DIR__ . '/fixture/*.log';
+        $files = glob($pattern);
+
+        foreach ($files as $file) {
+            if (is_file($file)) { // Check if it's a file
+                unlink($file); // Delete the file
+            }
+        }
+    }
     public function testGetInstanceWithLogDriver()
     {
-        $logger = LogHandler::getInstance(Log::class, $this->config);
+        $logger = LogHandler::getInstance(Log::class, 'ALL', $this->config);
         $this->assertInstanceOf(Log::class, $logger);
     }
 
@@ -29,7 +41,7 @@ class LogHandlerTest extends TestCase
 
     public function testCallStaticMethod()
     {
-        $logger = LogHandler::getInstance(Log::class, $this->config);
+        $logger = LogHandler::getInstance(Log::class, 'ALL', $this->config);
         $result = LogHandler::error('Test error message');
         $this->assertTrue($result);
     }
@@ -49,7 +61,7 @@ class LogHandlerTest extends TestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Method invalidMethod does not exist');
-        $logger = LogHandler::getInstance(Log::class, $this->config);
+        $logger = LogHandler::getInstance(Log::class, 'ALL', $this->config);
         LogHandler::invalidMethod();
     }
 }
