@@ -1,14 +1,22 @@
 <?php
 
+use Loader\Config\ConfigLoader;
 use Logger\Log;
 use Logger\LogHandler;
 use PHPUnit\Framework\TestCase;
 
 class LogHandlerTest extends TestCase
 {
+    public $config;
+
+    public function setup(): void
+    {
+        $this->config = ConfigLoader::getInstance(ConfigLoader::ARRAY_LOADER);
+        $this->config->set('logs', __DIR__ . '/fixture');
+    }
     public function testGetInstanceWithLogDriver()
     {
-        $logger = LogHandler::getInstance(Log::class);
+        $logger = LogHandler::getInstance(Log::class, $this->config);
         $this->assertInstanceOf(Log::class, $logger);
     }
 
@@ -21,7 +29,7 @@ class LogHandlerTest extends TestCase
 
     public function testCallStaticMethod()
     {
-        $logger = LogHandler::getInstance(Log::class);
+        $logger = LogHandler::getInstance(Log::class, $this->config);
         $result = LogHandler::error('Test error message');
         $this->assertTrue($result);
     }

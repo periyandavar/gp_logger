@@ -3,7 +3,6 @@
 use Loader\Config\ConfigLoader;
 use Logger\Log;
 use PHPUnit\Framework\TestCase;
-use PSpell\Config;
 
 class LogTest extends TestCase
 {
