@@ -1,0 +1,31 @@
+{
+    "name": "gp/logger",
+    "description": "A simple logger interface tool",
+    "type": "library",
+    "require": {
+        "gp/loader": "^1.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.72",
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^2.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Periyandavar Ganesh",
+            "email": "vickyperiyandavar@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Logger\\": "src//"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Logger\\": "src//"
+        }
+    }
+}
