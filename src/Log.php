@@ -59,7 +59,7 @@ class Log
         $configs = is_array($configs) ? array_merge($default_config, $configs) : $default_config;
 
         $this->_dir = $configs['logs'];
-        !is_dir($this->_dir) and mkdir($this->_dir, 0777);
+        !is_dir($this->_dir) and @mkdir($this->_dir, 0777);
         $this->_initialize();
     }
 
