@@ -9,7 +9,7 @@ class LogTest extends TestCase
 {
     public $config;
 
-    public function safeUp()
+    public function setup(): void
     {
         $this->config = ConfigLoader::getInstance(ConfigLoader::ARRAY_LOADER);
         $this->config->set('logs', __DIR__ . '/fixture');
