@@ -268,6 +268,11 @@ class Log
      */
     private function _add(string $file, string $msg, ?array $data = null)
     {
+        $data = $data ?? [];
+        $data['context'] = [
+            'url' => $_SERVER['REQUEST_URI'],
+            // 'backtrace' => debug_backtrace()[2] ?? ''
+        ];
         !file_exists($file)
             && fclose(fopen($file, 'w'));
         if (file_exists($file)) {

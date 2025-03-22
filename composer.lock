@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ef7f573c979bee4c65d925c9717031c",
+    "content-hash": "b389af31fcdc0e8d064c9e60d2e8cbdd",
     "packages": [
         {
             "name": "gp/loader",
-            "version": "v1.1.0",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/periyandavar/gp_loader.git",
-                "reference": "959ea2d8ccdadb79174f24921254dc6a2e738839"
+                "reference": "e4e653d83ed0dfd1c9c1599f63b56c5f2ef48304"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/periyandavar/gp_loader/zipball/959ea2d8ccdadb79174f24921254dc6a2e738839",
-                "reference": "959ea2d8ccdadb79174f24921254dc6a2e738839",
+                "url": "https://api.github.com/repos/periyandavar/gp_loader/zipball/e4e653d83ed0dfd1c9c1599f63b56c5f2ef48304",
+                "reference": "e4e653d83ed0dfd1c9c1599f63b56c5f2ef48304",
                 "shasum": ""
             },
             "require-dev": {
@@ -44,9 +44,9 @@
             "description": "A Loader library to autoload the classes and a container to support the dependency injections",
             "support": {
                 "issues": "https://github.com/periyandavar/gp_loader/issues",
-                "source": "https://github.com/periyandavar/gp_loader/tree/v1.1.0"
+                "source": "https://github.com/periyandavar/gp_loader/tree/v1.1.2"
             },
-            "time": "2025-03-16T11:07:13+00:00"
+            "time": "2025-03-18T16:09:41+00:00"
         }
     ],
     "packages-dev": [
@@ -520,16 +520,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.72.0",
+            "version": "v3.73.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "900389362c43d116fee1ffc51f7878145fa61b57"
+                "reference": "ffcb8200a42045e65049af7910cfd022f631b064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/900389362c43d116fee1ffc51f7878145fa61b57",
-                "reference": "900389362c43d116fee1ffc51f7878145fa61b57",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ffcb8200a42045e65049af7910cfd022f631b064",
+                "reference": "ffcb8200a42045e65049af7910cfd022f631b064",
                 "shasum": ""
             },
             "require": {
@@ -537,6 +537,7 @@
                 "composer/semver": "^3.4",
                 "composer/xdebug-handler": "^3.0.3",
                 "ext-filter": "*",
+                "ext-hash": "*",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "fidry/cpu-core-counter": "^1.2",
@@ -611,7 +612,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.72.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.73.1"
             },
             "funding": [
                 {
@@ -619,7 +620,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-13T11:25:37+00:00"
+            "time": "2025-03-19T23:42:16+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4402,10 +4403,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": {
+        "php": "^8.0"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
