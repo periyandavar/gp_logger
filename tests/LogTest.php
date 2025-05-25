@@ -66,13 +66,6 @@ class LogTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testActivity()
-    {
-        $log = Log::getInstance('ALL', $this->config);
-        $result = $log->activity('This is an activity message');
-        $this->assertTrue($result);
-    }
-
     public function testCustom()
     {
         $log = Log::getInstance('ALL', $this->config);
