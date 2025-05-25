@@ -7,13 +7,6 @@ use Loader\Config\ConfigLoader;
 class Log
 {
     /**
-     * Activity log file name
-     *
-     * @var null|string
-     */
-    private $_activity = null;
-
-    /**
      * Error log file name
      *
      * @var null|string
@@ -56,7 +49,7 @@ class Log
             'logs' => $dir . '/logs'
         ];
         $configs = $config ? $config->getAll() : $default_config;
-        $configs = is_array($configs) ? array_merge($default_config, $configs) : $default_config;
+        $configs = array_merge($default_config, $configs);
 
         $this->dir = $configs['logs'];
         ! is_dir($this->dir) && @mkdir($this->dir, 0777);
@@ -84,11 +77,6 @@ class Log
         closedir($dir);
         $prefix = Date('Y-m-d');
         $this->error = $this->error ?? $prefix . '-error.log';
-        $this->_activity = $this->_activity ?? $prefix . '-activity.log';
-        !file_exists($this->dir . '/' . $this->error)
-            && fclose(fopen($this->dir . '/' . $this->error, 'w'));
-        !file_exists($this->dir . '/' . $this->_activity)
-            && fclose(fopen($this->dir . '/' . $this->_activity, 'w'));
     }
 
     /**
@@ -211,22 +199,7 @@ class Log
     }
 
     /**
-     * Add contents to activity log
-     *
-     * @param string $msg  Error message
-     * @param array  $data data to be append
-     *
-     * @return bool
-     */
-    public function activity($msg, $data = null): bool
-    {
-        $msg = $this->format($msg, 'INFO', date('m/d/Y h:i:s'));
-
-        return $this->_add($this->dir . '/' . $this->_activity, $msg, $data);
-    }
-
-    /**
-     * Add contents to activity log
+     * Add Custom log message.
      *
      * @param string $file Filename
      * @param string $msg  Error message
@@ -270,7 +243,7 @@ class Log
     {
         $data = $data ?? [];
         $data['context'] = [
-            'url' => $_SERVER['REQUEST_URI'],
+            'url' => $_SERVER['REQUEST_URI'] ?? '',
             // 'backtrace' => debug_backtrace()[2] ?? ''
         ];
         !file_exists($file)
