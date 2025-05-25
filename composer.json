@@ -3,7 +3,7 @@
     "description": "A simple logger interface tool",
     "type": "library",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "gp/loader": "^2.0.10"
     },
     "require-dev": {
