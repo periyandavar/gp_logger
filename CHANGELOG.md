@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/periyandavar/gp_logger/tree/HEAD)
 
-[Full Changelog](https://github.com/periyandavar/gp_logger/compare/v0.0.2...HEAD)
+[Full Changelog](https://github.com/periyandavar/gp_logger/compare/0.0.3...HEAD)
+
+**Merged pull requests:**
+
+- feat: enhance the logger [\#9](https://github.com/periyandavar/gp_logger/pull/9) ([periyandavar](https://github.com/periyandavar))
+
+## [0.0.3](https://github.com/periyandavar/gp_logger/tree/0.0.3) (2025-05-25)
+
+[Full Changelog](https://github.com/periyandavar/gp_logger/compare/v0.0.2...0.0.3)
 
 **Merged pull requests:**
 
