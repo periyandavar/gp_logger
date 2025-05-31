@@ -15,9 +15,9 @@ class Logger
     /**
      * Return the logger instance.
      *
-     * @param  string     $driver
-     * @param  mixed      $level
-     * @param  ?ConfigLoader      $config
+     * @param  string        $driver
+     * @param  mixed         $level
+     * @param  ?ConfigLoader $config
      * @throws \Exception
      * @return Log
      */
