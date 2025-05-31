@@ -6,6 +6,8 @@ use Loader\Config\ConfigLoader;
 
 class Log
 {
+    public const DATE_FORMAT = 'm/d/Y h:i:s';
+
     /**
      * Error log file name
      *
@@ -33,6 +35,8 @@ class Log
 
     private static $_instance;
 
+    private $date_format;
+
     /**
      * Constructor
      *
@@ -46,12 +50,14 @@ class Log
             : 'ALL';
         $dir = $_SERVER['DOCUMENT_ROOT'] ?? __DIR__;
         $default_config = [
-            'logs' => $dir . '/logs'
+            'logs' => $dir . '/logs',
+            'date_format' => self::DATE_FORMAT,
         ];
         $configs = $config ? $config->getAll() : $default_config;
         $configs = array_merge($default_config, $configs);
 
-        $this->dir = $configs['logs'];
+        $this->dir = $configs['logs'] ?? '';
+        $this->date_format = $configs['date_format'] ?? self::DATE_FORMAT;
         ! is_dir($this->dir) && @mkdir($this->dir, 0777);
         $this->_initialize();
     }
@@ -114,7 +120,7 @@ class Log
     public function error($msg, $data = null): bool
     {
         if ($this->levels[$this->level] >= $this->levels['ERROR']) {
-            $msg = $this->format($msg, 'ERROR', date('m/d/Y h:i:s'));
+            $msg = $this->format($msg, 'ERROR', date($this->date_format));
 
             return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
@@ -133,7 +139,7 @@ class Log
     public function info($msg, $data = null): bool
     {
         if ($this->levels[$this->level] >= $this->levels['INFO']) {
-            $msg = $this->format($msg, 'INFO', date('m/d/Y h:i:s'));
+            $msg = $this->format($msg, 'INFO', date($this->date_format));
 
             return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
@@ -152,7 +158,7 @@ class Log
     public function warning($msg, $data = null): bool
     {
         if ($this->levels[$this->level] >= $this->levels['WARNING']) {
-            $msg = $this->format($msg, 'WARNING', date('m/d/Y h:i:s'));
+            $msg = $this->format($msg, 'WARNING', date($this->date_format));
 
             return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
@@ -171,7 +177,7 @@ class Log
     public function fatal($msg, $data = null): bool
     {
         if ($this->levels[$this->level] >= $this->levels['FATAL']) {
-            $msg = $this->format($msg, 'FATAL', date('m/d/Y h:i:s'));
+            $msg = $this->format($msg, 'FATAL', date($this->date_format));
 
             return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
@@ -190,7 +196,7 @@ class Log
     public function debug($msg, $data = null): bool
     {
         if ($this->levels[$this->level] >= $this->levels['DEBUG']) {
-            $msg = $this->format($msg, 'DEBUG', date('m/d/Y h:i:s'));
+            $msg = $this->format($msg, 'DEBUG', date($this->date_format));
 
             return $this->_add($this->dir . '/' . $this->error, $msg, $data);
         }
@@ -209,7 +215,7 @@ class Log
      */
     public function custom($file, $msg, $data = null): bool
     {
-        $msg .= '[' . date('m/d/Y h:i:s') . ']';
+        $msg .= '[' . date($this->date_format) . ']';
 
         return $this->_add($this->dir . '/' . $file, $msg, $data);
     }
@@ -225,9 +231,7 @@ class Log
      */
     protected function format(string $msg, string $level, string $date): string
     {
-        $format = "[$date] [$level] : " . $msg;
-
-        return $format;
+        return "[$date] [$level] : " . $msg;
     }
 
     /**

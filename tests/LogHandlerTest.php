@@ -2,7 +2,7 @@
 
 use Loader\Config\ConfigLoader;
 use Logger\Log;
-use Logger\LogHandler;
+use Logger\Logger;
 use PHPUnit\Framework\TestCase;
 
 class LogHandlerTest extends TestCase
@@ -28,7 +28,7 @@ class LogHandlerTest extends TestCase
     }
     public function testGetInstanceWithLogDriver()
     {
-        $logger = LogHandler::getInstance(Log::class, 'ALL', $this->config);
+        $logger = Logger::getInstance(Log::class, 'ALL', $this->config);
         $this->assertInstanceOf(Log::class, $logger);
     }
 
@@ -36,13 +36,13 @@ class LogHandlerTest extends TestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Driver not found : InvalidDriver');
-        LogHandler::getInstance('InvalidDriver');
+        Logger::getInstance('InvalidDriver');
     }
 
     public function testCallStaticMethod()
     {
-        $logger = LogHandler::getInstance(Log::class, 'ALL', $this->config);
-        $result = LogHandler::error('Test error message');
+        Logger::getInstance(Log::class, 'ALL', $this->config);
+        $result = Logger::error('Test error message');
         $this->assertTrue($result);
     }
 
@@ -54,14 +54,14 @@ class LogHandlerTest extends TestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Logger not found');
-        LogHandler::error('Test error message');
+        Logger::error('Test error message');
     }
 
     public function testCallStaticMethodWithInvalidMethod()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Method invalidMethod does not exist');
-        $logger = LogHandler::getInstance(Log::class, 'ALL', $this->config);
-        LogHandler::invalidMethod();
+        Logger::getInstance(Log::class, 'ALL', $this->config);
+        Logger::invalidMethod();
     }
 }
